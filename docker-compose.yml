@@ -1,0 +1,17 @@
+version: "3.7"
+services:
+  app:
+    build: .
+    command: python -u app.py
+    ports:
+      - "8000:5000"
+    depends_on:
+      - mongodb-meli
+    volumes:
+      - ./proxy:/proxy
+    links:
+      - mongodb-meli
+  mongodb-meli:
+    image: mongo:latest
+    ports:
+      - 27017:27017
