@@ -16,7 +16,7 @@ class TooManyRequests(Exception):
     pass
 
 
-class TooManyResquestPath(Exception):
+class TooManyRequestPath(Exception):
     pass
 
 
@@ -31,7 +31,7 @@ class NotFound(Exception):
 errors = {
     "UnauthorizedError": {"message": "Sin autorización", "status": 401},
     "PathUnauthorized": {"message": "No esta autorizado para acceder a esta url", "status": 401},
-    "TooManyRequest": {"message": "Excedió su limite de solicitudes a la api de mercadolibre", "status": 429},
+    "TooManyRequests": {"message": "Excedió su limite de solicitudes a la api de mercadolibre", "status": 429},
     "TooManyRequestPath": {"message": "Excedió el número de solicitudes a esta url", "status": 429},
     "IPAlreadyExistsError": {"message": "Este cliente ya existe", "status": 400},
     "SchemaValidationError": { "message": "Faltan campos requeridos", "status": 400},
