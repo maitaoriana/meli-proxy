@@ -5,11 +5,12 @@ from flask_restful import Api
 from database.db import initialize_db
 from database.models import Clients
 from resources.routes import initialize_routes
+from resources.errors import errors
 
 MELI_URL = 'https://api.mercadolibre.com/'
 
 app = Flask(__name__)
-api = Api(app)
+api = Api(app, errors=errors)
 
 app.config['MONGODB_SETTINGS'] = {
     'host': 'mongodb://mongodb-meli/proxy'
