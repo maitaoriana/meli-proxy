@@ -1,18 +1,19 @@
-from flask import Flask, request, Response, abort
+from flask import Flask, request, abort
 from requests import get
 from http import HTTPStatus
+from flask_restful import Api
 from database.db import initialize_db
 from database.models import Clients
+from resources.routes import initialize_routes
 
 MELI_URL = 'https://api.mercadolibre.com/'
 
 app = Flask(__name__)
+api = Api(app)
 
 app.config['MONGODB_SETTINGS'] = {
     'host': 'mongodb://mongodb-meli/proxy'
 }
-
-initialize_db(app)
 
 
 @app.route('/', defaults={'url': ''})
@@ -26,29 +27,7 @@ def proxy(url):
     return get(f'{MELI_URL}{url}').content
 
 
-@app.route('/clients')
-def get_clients():
-    clients = Clients.objects().to_json()
-    return Response(clients, mimetype="application/json", status=200)
-
-
-@app.route('/clients', methods=['POST'])
-def add_clients():
-    body = request.get_json()
-    client = Clients(**body).save()
-    return {'id': str(client.id)}, 200
-
-
-@app.route('/clients/<ip>', methods=['PUT'])
-def update_movie(ip):
-    body = request.get_json()
-    Clients.objects.get(ip=ip).update(**body)
-    return '', 200
-
-@app.route('/clients/<ip>', methods=['DELETE'])
-def delete_movie(ip):
-    client = Clients.objects.get(ip=ip).delete()
-    return '', 200
-
+initialize_db(app)
+initialize_routes(api)
 
 app.run(host="0.0.0.0", port=5000)
