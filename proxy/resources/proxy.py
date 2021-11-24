@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 from database.models import Clients
 from requests import get
-from .errors import UnauthorizedError, TooManyRequests
+from .errors import UnauthorizedError, TooManyRequests, TooManyRequestPath
 
 MELI_URL = 'https://api.mercadolibre.com/'
 
@@ -19,7 +19,19 @@ class Proxy(Resource):
             raise UnauthorizedError
         if client.cant_request >= client.max_request:
             raise TooManyRequests
-        client.update(inc__cant_request=1)
+
+        rule = client.rules.filter(path=request.path).first()
+        if not rule:
+            client.cant_request = client.cant_request + 1
+            client.save()
+            return get(f'{MELI_URL}{url}').json()
+
+        if rule.cant_request >= rule.max_request:
+            raise TooManyRequestPath
+
+        client.cant_request = client.cant_request + 1
+        rule.cant_request = rule.cant_request + 1
+        client.save()
         return get(f'{MELI_URL}{url}').json()
 
 
