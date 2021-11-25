@@ -4,7 +4,7 @@ services:
     build: .
     command: python -u app.py
     ports:
-      - "8000:5000"
+      - "8080:5000"
     depends_on:
       - meli-mongodb
     volumes:
