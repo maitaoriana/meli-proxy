@@ -3,7 +3,7 @@ from bson.objectid import ObjectId
 
 
 class PathRules(db.EmbeddedDocument):
-    _id = db.ObjectIdField(required=True, default=ObjectId)
+    oid = db.ObjectIdField(required=True, default=ObjectId)
     path = db.StringField(required=True)
     max_request = db.IntField(min_value=0)
     cant_request = db.IntField(min_value=0, default=0)

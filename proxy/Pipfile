@@ -8,6 +8,7 @@ flask = "*"
 requests = "*"
 flask-mongoengine = "*"
 flask-restful = "*"
+prometheus-flask-exporter = "*"
 
 [dev-packages]
 

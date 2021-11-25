@@ -1,17 +1,41 @@
 version: "3.7"
 services:
-  app:
+  meli-proxy:
     build: .
     command: python -u app.py
     ports:
       - "8000:5000"
     depends_on:
-      - mongodb-meli
+      - meli-mongodb
     volumes:
       - ./proxy:/proxy
     links:
-      - mongodb-meli
-  mongodb-meli:
+      - meli-mongodb
+
+  meli-mongodb:
     image: mongo:latest
     ports:
       - 27017:27017
+    volumes:
+      - meli-proxy-database:/data/db
+
+  prometheus:
+    image: prom/prometheus:v2.3.1
+    volumes:
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - 9090:9090
+
+  grafana:
+    image: grafana/grafana:latest
+    depends_on:
+      - prometheus
+    ports:
+      - 3000:3000
+    volumes:
+      - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/default.yml
+      - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
+
+volumes:
+  meli-proxy-database:
