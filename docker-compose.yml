@@ -36,6 +36,8 @@ services:
       - ./grafana/datasource.yml:/etc/grafana/provisioning/datasources/default.yml
       - ./grafana/dashboard.yml:/etc/grafana/provisioning/dashboards/default.yml
       - ./grafana/dashboards:/var/lib/grafana/dashboards
+    env_file:
+      - ./grafana/config.monitoring
 
 volumes:
   meli-proxy-database:

@@ -4,9 +4,9 @@ from .clients_path_rules import ClientsPathRulesResource, ClientsPathRuleResourc
 
 
 def initialize_routes(api):
-    api.add_resource(ClientsPathRuleResource, '/clients/<ip>/rules/<rule_id>')
-    api.add_resource(ClientsPathRulesResource, '/clients/<ip>/rules')
-    api.add_resource(ClientResource, '/clients/<ip>')
+    api.add_resource(ClientsPathRuleResource, '/clients/<client_id>/rules/<rule_id>')
+    api.add_resource(ClientsPathRulesResource, '/clients/<client_id>/rules')
+    api.add_resource(ClientResource, '/clients/<id>')
     api.add_resource(ClientsResetResource, '/clients/reset')
     api.add_resource(ClientsResource, '/clients')
     api.add_resource(Proxy, '/<path:url>')

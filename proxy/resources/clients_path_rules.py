@@ -8,9 +8,9 @@ from http import HTTPStatus
 
 class ClientsPathRulesResource(Resource):
 
-    def post(self, ip):
+    def post(self, client_id):
         try:
-            client = Clients.objects.get(ip=ip)
+            client = Clients.objects.get(id=client_id)
             body = request.get_json()
             rule = PathRules(**body)
             client.rules.append(rule)
@@ -27,10 +27,10 @@ class ClientsPathRulesResource(Resource):
 
 class ClientsPathRuleResource(Resource):
 
-    def patch(self, ip, rule_id):
+    def patch(self, client_id, rule_id):
         try:
             data = request.get_json()
-            client = Clients.objects.get(ip=ip)
+            client = Clients.objects.get(id=client_id)
             client.rules.filter(oid=rule_id).update(**data)
             client.save()
         except (FieldDoesNotExist, ValidationError):
@@ -42,9 +42,9 @@ class ClientsPathRuleResource(Resource):
 
         return {'id': rule_id}, HTTPStatus.PARTIAL_CONTENT
 
-    def delete(self, ip, rule_id):
+    def delete(self, client_id, rule_id):
         try:
-            client = Clients.objects.get(ip=ip)
+            client = Clients.objects.get(id=client_id)
             client.rules.filter(oid=rule_id).delete()
             client.save()
         except DoesNotExist:

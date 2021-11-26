@@ -26,31 +26,33 @@ class ClientsResource(Resource):
 
 class ClientResource(Resource):
 
-    def put(self, ip):
+    def put(self, id):
         try:
             body = request.get_json()
-            client = Clients.objects.get(ip=ip)
+            client = Clients.objects.get(id=id)
             client.update(**body)
         except InvalidQueryError:
             raise SchemaValidationError
         except DoesNotExist:
             raise NotFound
 
-        return {'ip': client.ip}, HTTPStatus.OK
+        return {'id': str(client.id)}, HTTPStatus.OK
 
-    def delete(self, ip):
+    def delete(self, id):
         try:
-            Clients.objects.get(ip=ip).delete()
+            Clients.objects.get(id=id).delete()
         except DoesNotExist:
             raise NotFound
 
         return {'status': HTTPStatus.OK}, HTTPStatus.OK
 
-    def get(self, ip):
+    def get(self, id):
         try:
-            client = Clients.objects.get(ip=ip).to_json()
+            client = Clients.objects.get(id=id).to_json()
         except DoesNotExist:
             raise NotFound
+        except ValidationError:
+            raise SchemaValidationError
 
         return Response(client, mimetype="application/json", status=HTTPStatus.OK)
 

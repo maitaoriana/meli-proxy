@@ -28,5 +28,7 @@ de escalamiento, para asi poder atender 50.000 request/segundo
 
 ![Diagram](./docs/meli-proxy-diagram.jpeg?raw=true)
 
+Puede visualizar los enpoints de administracion en [aqui](https://app.swaggerhub.com/apis/maitaoriana/meli-proxy/1.0.0).
+
 
 
