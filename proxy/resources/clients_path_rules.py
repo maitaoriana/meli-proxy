@@ -1,13 +1,20 @@
-from flask import Response, request
-from flask_restful import Resource
-from database.models import Clients, PathRules
-from mongoengine.errors import FieldDoesNotExist,NotUniqueError, DoesNotExist, ValidationError, InvalidQueryError
-from .errors import SchemaValidationError, IPAlreadyExistsError, NotFound
 from http import HTTPStatus
+
+from flask import request
+from flask_restful import Resource
+from mongoengine.errors import DoesNotExist
+from mongoengine.errors import FieldDoesNotExist
+from mongoengine.errors import NotUniqueError
+from mongoengine.errors import ValidationError
+
+from .errors import IPAlreadyExistsError
+from .errors import NotFound
+from .errors import SchemaValidationError
+from database.models import Clients
+from database.models import PathRules
 
 
 class ClientsPathRulesResource(Resource):
-
     def post(self, client_id):
         try:
             client = Clients.objects.get(id=client_id)
@@ -22,11 +29,10 @@ class ClientsPathRulesResource(Resource):
         except DoesNotExist:
             raise NotFound
 
-        return {'id': str(rule.oid)}, HTTPStatus.CREATED
+        return {"id": str(rule.oid)}, HTTPStatus.CREATED
 
 
 class ClientsPathRuleResource(Resource):
-
     def patch(self, client_id, rule_id):
         try:
             data = request.get_json()
@@ -40,7 +46,7 @@ class ClientsPathRuleResource(Resource):
         except DoesNotExist:
             raise NotFound
 
-        return {'id': rule_id}, HTTPStatus.PARTIAL_CONTENT
+        return {"id": rule_id}, HTTPStatus.PARTIAL_CONTENT
 
     def delete(self, client_id, rule_id):
         try:
@@ -50,4 +56,4 @@ class ClientsPathRuleResource(Resource):
         except DoesNotExist:
             raise NotFound
 
-        return {'status': HTTPStatus.OK}, HTTPStatus.OK
+        return {"status": HTTPStatus.OK}, HTTPStatus.OK

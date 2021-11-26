@@ -1,12 +1,12 @@
 Meli-proxy:
 ===========
 
-Proxy for mercadolibre API, it allows controlling and measuring requests to the domain api.mercadolibre.com. Also it 
+Proxy for mercadolibre API, it allows controlling and measuring requests to the domain api.mercadolibre.com. Also it
 limits the IPs that have access to the api and the number of requests made by them.
 
 # Usage
 
-You must install docker and docker-compose 
+You must install docker and docker-compose
 
 ### Run
 
@@ -28,7 +28,3 @@ Prometheus and Grafana. http://localhost:3000
 The next image is a diagram of this solution with ability of autoscaling.
 
 ![Diagram](./docs/meli-proxy-diagram.jpeg?raw=true)
-
-
-
-

@@ -7,4 +7,3 @@ datasources:
   editable: true
   is_default: true
   url: http://prometheus:9090
-

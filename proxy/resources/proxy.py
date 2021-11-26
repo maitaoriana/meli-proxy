@@ -1,14 +1,16 @@
 from flask import request
 from flask_restful import Resource
-from database.models import Clients
 from requests import get
-from .errors import UnauthorizedError, TooManyRequests, TooManyRequestPath
 
-MELI_URL = 'https://api.mercadolibre.com/'
+from .errors import TooManyRequestPath
+from .errors import TooManyRequests
+from .errors import UnauthorizedError
+from database.models import Clients
+
+MELI_URL = "https://api.mercadolibre.com/"
 
 
 class Proxy(Resource):
-
     def get(self, url=""):
         return self.handling_request(url)
 
@@ -40,13 +42,12 @@ class Proxy(Resource):
 
     def handling_request(self, url=""):
         self.validate_access()
-        token = request.headers.get('Authorization')
-        header = {'Authorization': f'{token}'} if token else {}
-        response = get(f'{MELI_URL}{request.full_path}', headers=header)
+        token = request.headers.get("Authorization")
+        header = {"Authorization": f"{token}"} if token else {}
+        response = get(f"{MELI_URL}{request.full_path}", headers=header)
         return response.json(), response.status_code
 
 
 class ProxyHome(Proxy):
-
     def get(self):
         return self.handling_request()

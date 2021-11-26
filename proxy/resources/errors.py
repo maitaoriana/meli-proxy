@@ -32,30 +32,30 @@ class NotFound(Exception):
 errors = {
     "UnauthorizedError": {
         "message": "Sin autorización",
-        "status": HTTPStatus.UNAUTHORIZED
+        "status": HTTPStatus.UNAUTHORIZED,
     },
     "PathUnauthorized": {
         "message": "No esta autorizado para acceder a esta url",
-        "status": HTTPStatus.UNAUTHORIZED
+        "status": HTTPStatus.UNAUTHORIZED,
     },
     "TooManyRequests": {
         "message": "Excedió su limite de solicitudes a la api de mercadolibre",
-        "status": HTTPStatus.TOO_MANY_REQUESTS
+        "status": HTTPStatus.TOO_MANY_REQUESTS,
     },
     "TooManyRequestPath": {
         "message": "Excedió el número de solicitudes a esta url",
-        "status": HTTPStatus.TOO_MANY_REQUESTS
+        "status": HTTPStatus.TOO_MANY_REQUESTS,
     },
     "IPAlreadyExistsError": {
         "message": "Este cliente ya existe",
-        "status": HTTPStatus.BAD_REQUEST
+        "status": HTTPStatus.BAD_REQUEST,
     },
     "SchemaValidationError": {
         "message": "Faltan campos requeridos",
-        "status": HTTPStatus.BAD_REQUEST
+        "status": HTTPStatus.BAD_REQUEST,
     },
     "NotFound": {
         "message": "El elemento no existe",
-        "status": HTTPStatus.NOT_FOUND
-    }
+        "status": HTTPStatus.NOT_FOUND,
+    },
 }
